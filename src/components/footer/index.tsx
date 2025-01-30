@@ -10,7 +10,7 @@ const Footer = () => {
               <Logo /> <span>Modalane</span>
             </h6>
             <p>
-              House My Brand designs clothing for the young, the old & everyone
+              Modalane designs clothing for the young, the old & everyone
               in between – but most importantly, for the fashionable
             </p>
             <ul className="site-footer__social-networks">
@@ -82,10 +82,10 @@ const Footer = () => {
             <ul>
               <li>Contact</li>
               <li>
-                <a href="#">store@uikit.com</a>
+                <a href="#">modalanestore@gmail.com</a>
               </li>
               <li>
-                <a href="#">Hotline: +1 131 138 138</a>
+                <a href="#">Hotline: +91 9001920999001</a>
               </li>
             </ul>
           </div>
