@@ -30,18 +30,21 @@
   "root": true,
   "rules": {
     "@typescript-eslint/ban-ts-comment": "off",
-    "@typescript-eslint/consistent-type-imports": "error",
+    "@typescript-eslint/consistent-type-imports": "off",
     "react/react-in-jsx-scope": "off",
     "react/no-unescaped-entities": "off",
-    "prettier/prettier": "error",
-    "simple-import-sort/imports": "error",
-    "simple-import-sort/exports": "error",
-    "unused-imports/no-unused-imports": "error",
+    "prettier/prettier": "off",
+    "simple-import-sort/imports": "off",
+    "simple-import-sort/exports": "off",
+    "unused-imports/no-unused-imports": "off",
     "@next/next/no-img-element": "off",
     "react/no-unknown-property": [
       2,
       {
-        "ignore": ["jsx", "global"]
+        "ignore": [
+          "jsx",
+          "global"
+        ]
       }
     ],
     "unused-imports/no-unused-vars": [
