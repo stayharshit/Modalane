@@ -2,10 +2,16 @@
   "name": "next-ecommerce",
   "version": "0.1.0",
   "private": true,
+  "packageManager": "pnpm@9.15.5",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
+    "lint": "next lint",
+    "typecheck": "tsc --noEmit",
+    "db:generate": "prisma generate",
+    "db:push": "prisma db push",
+    "db:seed": "tsx prisma/seed.ts",
     "format": "next lint --fix && prettier '**/*.{json,yaml}' --write --ignore-path .gitignore",
     "export": "next build && next export"
   },
