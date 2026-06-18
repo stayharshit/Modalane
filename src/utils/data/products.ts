@@ -363,4 +363,73 @@ export const products = [
   },
 ];
 
+products.push({
+  ...products[0]!,
+  id: "7",
+  name: "Burgundy City Coat",
+  category: "Outerwear",
+  price: 158,
+  discount: 13,
+  quantityAvailable: 24,
+  currentPrice: 138,
+  sizes: ["S", "M", "L", "XL"],
+  colors: ["#171717", "#7c2434", "#f4f1eb"],
+  images: ["/images/products/catalog-07.jpg"],
+});
+
+const updatedProducts = [
+  { name: "Core Cotton Tee", category: "T-shirt", price: 42, currentPrice: 34, discount: 19, image: "/images/products/catalog-01.jpg" },
+  { name: "Summer Statement Sunglasses", category: "Accessories", price: 68, currentPrice: 56, discount: 18, image: "/images/products/catalog-02.jpg" },
+  { name: "Sunset Lounge Set", category: "Sets", price: 128, currentPrice: 108, discount: 16, image: "/images/products/catalog-03.jpg" },
+  { name: "Milan Blue Wool Coat", category: "Outerwear", price: 198, currentPrice: 178, discount: 10, image: "/images/products/catalog-04.jpg" },
+  { name: "Leather Moto Jacket", category: "Outerwear", price: 168, currentPrice: 148, discount: 12, image: "/images/products/catalog-05.jpg" },
+  { name: "Weekend Essentials Edit", category: "Sets", price: 118, currentPrice: 98, discount: 17, image: "/images/products/catalog-06.jpg" },
+  { name: "Burgundy City Coat", category: "Outerwear", price: 158, currentPrice: 138, discount: 13, image: "/images/products/catalog-07.jpg" },
+];
+
+updatedProducts.forEach((details, index) => {
+  const product = products[index];
+  if (product) {
+    Object.assign(product, {
+      ...details,
+      quantityAvailable: 18 + index * 2,
+      sizes: ["S", "M", "L", "XL"],
+      colors: ["#171717", "#d7c6ae", "#f4f1eb"],
+      images: [details.image],
+    });
+  }
+});
+
+const additionalProducts = [
+  { name: "Weekend Bomber Jacket", category: "Outerwear", price: 198, currentPrice: 178, image: "/images/products/catalog-08.jpg" },
+  { name: "Wide-Leg Weekend Trousers", category: "Trousers", price: 138, currentPrice: 118, image: "/images/products/catalog-09.jpg" },
+  { name: "Graphic Fleece Sweatshirt", category: "Sweatshirts", price: 94, currentPrice: 78, image: "/images/products/catalog-10.jpg" },
+  { name: "Classic Cotton Tee", category: "T-shirt", price: 48, currentPrice: 38, image: "/images/products/catalog-11.jpg" },
+  { name: "Everyday Black Tee", category: "T-shirt", price: 42, currentPrice: 34, image: "/images/products/catalog-12.jpg" },
+  { name: "California Long-Sleeve Tee", category: "T-shirt", price: 58, currentPrice: 48, image: "/images/products/catalog-13.jpg" },
+  { name: "Tailored Oxford Shirt", category: "Dress shirts", price: 118, currentPrice: 98, image: "/images/products/catalog-14.jpg" },
+  { name: "Weekend Essentials Set", category: "Sets", price: 148, currentPrice: 128, image: "/images/products/catalog-15.jpg" },
+  { name: "Pastel Chain Crossbody", category: "Accessories", price: 98, currentPrice: 82, image: "/images/products/bag-option-b.jpg" },
+  { name: "Pink City Crossbody", category: "Accessories", price: 88, currentPrice: 74, image: "/images/products/catalog-04.jpg" },
+  { name: "Everyday Smartwatch", category: "Accessories", price: 148, currentPrice: 128, image: "/images/products/watch-option-b.jpg" },
+  { name: "Acetate Frame Sunglasses", category: "Accessories", price: 68, currentPrice: 56, image: "/images/products/catalog-19.jpg" },
+  { name: "Retro Court Sneakers", category: "Shoes", price: 108, currentPrice: 92, image: "/images/products/shoe-option-c.jpg" },
+];
+
+products.push(
+  ...additionalProducts.map((details, index) => {
+    const { image, ...productDetails } = details;
+    return {
+      ...products[0]!,
+      ...productDetails,
+      id: String(products.length + index + 1),
+      discount: Math.round(((details.price - details.currentPrice) / details.price) * 100),
+      quantityAvailable: 12 + index,
+      sizes: details.category === "Accessories" ? ["One size"] : details.category === "Shoes" ? ["7", "8", "9", "10", "11"] : ["S", "M", "L", "XL"],
+      colors: ["#171717", "#d7c6ae", "#f4f1eb"],
+      images: [image],
+    };
+  }),
+);
+
 export default products;

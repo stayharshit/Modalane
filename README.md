@@ -20,6 +20,21 @@ This repository is a legacy e-commerce demo built with older Next.js patterns, R
 - Legacy SCSS structure and older component patterns
 - Basic product/cart flow exists, but it feels dated and lacks modern architecture
 
+### Phase 1 decisions
+
+- Redux Toolkit remains the application state layer for now. The cart is already persisted through `redux-persist`, and keeping one state model avoids a risky split during the frontend refresh.
+- The next state-layer review will happen after the API and order models exist. Zustand remains an option if the backend work shows that Redux is adding unnecessary complexity.
+- The Pages Router remains active during this phase. Route structure has been normalized without mixing Pages Router and App Router conventions in the same migration step.
+
+### Phase 2 progress
+
+- Product listing data is now queryable through `/api/products` with `search`, `category`, and `sort` parameters.
+- The products page keeps filter and sort state in the URL, and the header search submits directly into that catalog flow.
+- Product detail APIs now return a proper 404 response for unknown IDs.
+- Prisma 6.7.0 is installed with a local SQLite schema for users, products, orders, and order items.
+- `db:generate`, `db:push`, and `db:seed` are available through pnpm. The seed creates the catalog and `demo@modalane.test` / `modalane-demo`.
+- Registration and login now use the database with hashed passwords. Session cookies and database-backed product reads remain the next backend milestone.
+
 ## Target stack
 
 ### Frontend
@@ -229,17 +244,17 @@ Acceptance criteria:
 This is the working plan we can execute in the next session:
 
 - [ ] 1. Create a modern upgrade branch and document the baseline
-- [ ] 2. Audit the existing pages and decide exact app structure migration
-- [ ] 3. Set up TypeScript strict baseline and modern app shell
+- [x] 2. Audit the existing pages and decide exact app structure migration
+- [x] 3. Set up TypeScript strict baseline and modern app shell
 - [ ] 4. Install Tailwind + shadcn/ui foundation
-- [ ] 5. Refactor homepage and product listing UI
+- [x] 5. Refactor homepage and product listing UI
 - [ ] 6. Add Prisma schema and seed product data
 - [ ] 7. Implement basic product API routes
-- [ ] 8. Build a dummy Stripe payment route
+- [x] 8. Build a Stripe test payment route
 - [ ] 9. Build a dummy Razorpay payment route
-- [ ] 10. Add order confirmation and checkout flow
-- [ ] 11. Test end-to-end demo payment flow
-- [ ] 12. Document setup, env values, and next steps
+- [x] 10. Add order confirmation and checkout flow
+- [x] 11. Test end-to-end demo payment flow
+- [x] 12. Document setup, env values, and next steps
 
 ## Demo payment flow expectations
 
@@ -247,10 +262,11 @@ The product should support a demo checkout flow that behaves like a real ecommer
 
 ### Stripe demo flow
 
-- frontend creates checkout session
-- backend returns session URL
-- sandbox or mock completion redirect is handled
-- order is stored as a demo success record
+- backend creates a hosted Stripe Checkout Session from database prices
+- checkout reserves stock and creates a pending order
+- the server verifies payment on the success return and through a signed webhook
+- verified payments mark the order paid; expired/cancelled sessions release stock
+- use Stripe test keys only for local development
 
 ### Razorpay demo flow
 
@@ -265,12 +281,23 @@ Example environment variables to prepare:
 
 ```env
 NEXT_PUBLIC_APP_URL=http://localhost:3000
-DATABASE_URL="postgresql://user:password@localhost:5432/modalane"
+DATABASE_URL="file:./dev.db"
 NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_test_xxx
 STRIPE_SECRET_KEY=sk_test_xxx
+STRIPE_WEBHOOK_SECRET=whsec_xxx
 RAZORPAY_KEY_ID=rzp_test_xxx
 RAZORPAY_KEY_SECRET=xyz
 ```
+
+### Run Stripe locally
+
+Install the [Stripe CLI](https://docs.stripe.com/cli), then run `stripe login` and start a listener with:
+
+```sh
+stripe listen --forward-to http://localhost:3000/api/payments/stripe/webhook
+```
+
+Copy the listener's `whsec_...` value to `STRIPE_WEBHOOK_SECRET` in `.env.local`, restart Next.js, and test checkout with Stripe's published test card `4242 4242 4242 4242`, a future expiry, and any three-digit CVC. Never use live keys or real card details for local testing.
 
 ## Definition of done for the modernization effort
 
