@@ -29,3 +29,10 @@ yarn-error.log*
 .env.development.local
 .env.test.local
 .env.production.local
+
+# local lift notes
+lift.md
+
+# local SQLite database
+dev.db
+dev.db-journal
