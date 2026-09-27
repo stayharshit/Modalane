@@ -1,34 +1,290 @@
-# Comming soon
+# Modalane Modernization Roadmap
 
-I know it's been a while since I updated this repo, but hopefully in the next months I can add more features on the project.
-Thanks everyone who gave a star and forked it 🫶
+This repository is a legacy e-commerce demo built with older Next.js patterns, Redux-based state management, and mock-only API data. The goal of this upgrade is to modernize the app into a full-stack ecommerce experience using current tooling, stronger architecture, better UX, and demo payment integration with Stripe or Razorpay.
 
-# Next.js Ecommerce
+## Project goals
 
-This repo contains a work in progress Ecommerce responsive made with Next.js, Redux, Redux-persist, Hooks, SCSS and BEM. If you like it please give it a star :)
+- Upgrade the app from a legacy codebase to a modern, maintainable stack
+- Use current Next.js and React patterns with TypeScript
+- Replace outdated UI patterns with modern component architecture
+- Add a real backend layer with persistent data and API routes
+- Add demo payment flows for Stripe and Razorpay
+- Improve performance, accessibility, and developer experience
+- Prepare the codebase for further iteration and production-style work
 
-## Getting started
+## Current state
 
-It's easy to have it running locally.
-Just do a `yarn install` to install the dependencies.
-Then do a `yarn dev` to run it locally.
+- App built with older React/Next patterns
+- Redux + persistence used for basic state handling
+- Mock data stored in local data files
+- Legacy SCSS structure and older component patterns
+- Basic product/cart flow exists, but it feels dated and lacks modern architecture
 
-## Backend
+## Target stack
 
-The backend of the project it's only mocked data. You can find them in `utils/data`.
-The API is being handled by Next API routes.
+### Frontend
 
-## Available pages
+- Next.js 15+
+- React 18/19-ready patterns
+- TypeScript strict mode
+- Tailwind CSS
+- shadcn/ui or component library primitives
+- App Router architecture
+- Zustand or Redux Toolkit for app state
+- Framer Motion for motion and polish
 
-- Home page: /
-- Products page: /products
-- Product single page: /product/1
-- Cart page: /cart
-- Login page: /login
-- Register page: /register
-- 404 page: /page-not-found
+### Backend / Data
 
-## New features added - Nov 2024
+- Next.js API routes or dedicated Node API service
+- Prisma ORM + PostgreSQL or SQLite for demo data
+- Server-side validation and typed DTOs
+- Product, cart, user, order, and payment models
+- Seed data and demo admin flows
 
-- Updated Next version.
-- Added eslint config.
+### Payments
+
+- Stripe Checkout Session flow (recommended primary)
+- Razorpay order creation + verification flow (secondary / alternate)
+- Demo-only keys with mock success handling
+- Order creation after successful payment callback
+
+## Upgrade roadmap
+
+### Phase 1: Foundation and modernization
+
+#### Task 1.1: Audit and baseline setup
+
+- Review current pages, components, store structure, and data flow
+- Decide whether to keep Redux or migrate to Zustand/RTK
+- Establish a clean baseline with TypeScript and linting rules
+- Add environment configuration and .env.example
+
+Acceptance criteria:
+
+- project has a clear architecture map
+- TypeScript is actively enforced
+- baseline app runs consistently
+
+#### Task 1.2: Upgrade app structure
+
+- Move from legacy page structure to App Router conventions
+- Introduce app/ directory with route groups and shared layouts
+- Separate server and client components properly
+- Create reusable components for buttons, cards, inputs, modal, and navigation
+
+Acceptance criteria:
+
+- routes are organized clearly
+- UI logic is broken into reusable components
+- app is easier to extend without coupling page logic
+
+#### Task 1.3: Replace outdated styling
+
+- Move from old SCSS architecture to Tailwind + design tokens
+- Create a component design system with consistent spacing, colors, and typography
+- Refactor the home, products, product detail, cart, checkout, and auth screens
+
+Acceptance criteria:
+
+- app has modern responsive layouts
+- UI is visually consistent
+- major pages feel current and premium
+
+### Phase 2: Full-stack data and API layer
+
+#### Task 2.1: Add a proper backend model
+
+- Create user, product, category, cart, and order models
+- Add Prisma schema and seed script
+- Replace static mock-only JSON usage with database-backed data
+
+Acceptance criteria:
+
+- product data is persisted in a database
+- seeds can recreate demo data reliably
+- APIs serve real data instead of local static files
+
+#### Task 2.2: Build API endpoints
+
+- GET /api/products
+- GET /api/products/:id
+- POST /api/auth/login
+- POST /api/auth/register
+- POST /api/cart
+- GET /api/orders
+- POST /api/orders
+
+Acceptance criteria:
+
+- endpoints return typed JSON
+- errors are handled consistently
+- validation is present for user input
+
+#### Task 2.3: Auth and session flow
+
+- Add session-based auth or JWT-based auth for demo use
+- Add protected routes for checkout and account pages
+- Add login/register UX improvements
+
+Acceptance criteria:
+
+- users can register and login in the app
+- auth state is consistent across pages
+- protected actions are enforced on the backend
+
+### Phase 3: Payment integration demo
+
+#### Task 3.1: Stripe demo integration
+
+- Add Stripe SDK usage in server routes
+- Create checkout session with product items and total amount
+- Add success and cancel handlers
+- Simulate demo payment verification flow
+
+Example endpoints:
+
+- POST /api/payments/stripe/create-checkout-session
+- GET /api/payments/stripe/success
+- GET /api/payments/stripe/cancel
+
+Acceptance criteria:
+
+- checkout session is created successfully
+- success flow moves to an order confirmation state
+- environment variables are documented clearly
+
+#### Task 3.2: Razorpay demo integration
+
+- Add Razorpay order creation endpoint
+- Attach checkout script on client
+- Verify payment signature in backend demo flow
+- Store demo order after verification
+
+Example endpoints:
+
+- POST /api/payments/razorpay/create-order
+- POST /api/payments/razorpay/verify
+
+Acceptance criteria:
+
+- user can complete a demo payment flow from frontend
+- payment verification succeeds with mock demo credentials
+- no production secrets are required for local use
+
+#### Task 3.3: Order creation and confirmation
+
+- On successful payment, generate a demo order record
+- Show confirmation page with order details and summary
+- Store payment metadata for traceability
+
+Acceptance criteria:
+
+- successful pay flow ends with a clear order confirmation
+- order details are available in frontend and API responses
+- payment state is not ambiguous after success/failure
+
+### Phase 4: Product and UX refresh
+
+#### Task 4.1: Product discovery experience
+
+- Add filters and sorting
+- Improve search and category browsing
+- Add product cards with images, badges, ratings, and CTAs
+- Modernize the product listing and detail pages
+
+#### Task 4.2: Cart and checkout experience
+
+- Replace basic cart flow with better quantity controls, totals, and shipping summary
+- Add address form and order summary
+- Improve checkout UX for desktop and mobile
+
+#### Task 4.3: Marketing and home pages
+
+- Add modern hero section with CTA blocks
+- Add feature highlights, category tiles, trending products, and testimonials
+- Improve landing page structure and conversion-oriented layout
+
+### Phase 5: Quality, testing, and deployment
+
+#### Task 5.1: Code quality
+
+- Enforce ESLint, Prettier, and TypeScript strict checking
+- Add unit tests for API helpers and business logic
+- Add component smoke tests for main flows
+
+#### Task 5.2: Performance and accessibility
+
+- Optimize images and font loading
+- Improve semantic markup and focus states
+- Reduce layout shifts and JS weight
+
+#### Task 5.3: Deployment prep
+
+- Add environment-based config
+- Create a Dockerfile or Vercel-ready setup
+- Document deployment steps and demo credentials
+
+## Suggested implementation order for today
+
+This is the working plan we can execute in the next session:
+
+- [ ] 1. Create a modern upgrade branch and document the baseline
+- [ ] 2. Audit the existing pages and decide exact app structure migration
+- [ ] 3. Set up TypeScript strict baseline and modern app shell
+- [ ] 4. Install Tailwind + shadcn/ui foundation
+- [ ] 5. Refactor homepage and product listing UI
+- [ ] 6. Add Prisma schema and seed product data
+- [ ] 7. Implement basic product API routes
+- [ ] 8. Build a dummy Stripe payment route
+- [ ] 9. Build a dummy Razorpay payment route
+- [ ] 10. Add order confirmation and checkout flow
+- [ ] 11. Test end-to-end demo payment flow
+- [ ] 12. Document setup, env values, and next steps
+
+## Demo payment flow expectations
+
+The product should support a demo checkout flow that behaves like a real ecommerce payment integration without production-level security requirements.
+
+### Stripe demo flow
+
+- frontend creates checkout session
+- backend returns session URL
+- sandbox or mock completion redirect is handled
+- order is stored as a demo success record
+
+### Razorpay demo flow
+
+- frontend requests an order from backend
+- user completes the Razorpay checkout modal
+- backend verifies the signature and records order
+- success page displays the order confirmation
+
+## Environment variables
+
+Example environment variables to prepare:
+
+```env
+NEXT_PUBLIC_APP_URL=http://localhost:3000
+DATABASE_URL="postgresql://user:password@localhost:5432/modalane"
+NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_test_xxx
+STRIPE_SECRET_KEY=sk_test_xxx
+RAZORPAY_KEY_ID=rzp_test_xxx
+RAZORPAY_KEY_SECRET=xyz
+```
+
+## Definition of done for the modernization effort
+
+The project is considered upgraded when:
+
+- the UI feels modern and current
+- the app uses modern Next.js patterns and TypeScript
+- data is backed by a real API layer
+- checkout flow is functional through demo payments
+- architecture is clean enough to extend with real ecommerce features
+- setup instructions and roadmap are clearly documented
+
+## Recommended next step
+
+Start with Phase 1 and 2 together: modernize the app shell and break the current product/cart flow into reusable client/server components, while adding a proper database-backed API structure. Once the base is stable, move into Stripe and Razorpay demo integration.
+
+This is the best path because it gives us a stronger foundation before adding payment complexity.
