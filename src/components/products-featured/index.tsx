@@ -1,11 +1,32 @@
 import Link from "next/link";
 import useSwr from "swr";
 
+import type { ProductTypeList } from "@/types";
+import catalogProducts from "@/utils/data/products";
+
 import ProductsCarousel from "./carousel";
 
+const fallbackProducts: ProductTypeList[] = catalogProducts.map((product) => ({
+  id: product.id,
+  name: product.name,
+  price: String(product.price),
+  color: product.colors[0] ?? "",
+  currentPrice: product.currentPrice,
+  discount: product.discount ? String(product.discount) : undefined,
+  images: product.images,
+}));
+
 const ProductsFeatured = () => {
-  const fetcher = (url: string) => fetch(url).then((res) => res.json());
-  const { data } = useSwr("/api/products", fetcher);
+  const fetcher = async (url: string): Promise<ProductTypeList[]> => {
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error("Unable to load featured products");
+    }
+
+    return response.json();
+  };
+  const { data, error } = useSwr<ProductTypeList[]>("/api/products", fetcher);
+  const featuredProducts = data ?? fallbackProducts;
 
   return (
     <section className="section section-products-featured">
@@ -17,7 +38,8 @@ const ProductsFeatured = () => {
           </Link>
         </header>
 
-        <ProductsCarousel products={data} />
+        {error && <p className="message message--error">Showing saved product picks.</p>}
+        <ProductsCarousel products={featuredProducts} />
       </div>
     </section>
   );

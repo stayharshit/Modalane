@@ -1,4 +1,5 @@
 import Slider from "rc-slider";
+import { useRouter } from "next/router";
 import { useState } from "react";
 
 import productsColors from "../../utils/data/products-colors";
@@ -12,14 +13,22 @@ const { createSliderWithTooltip } = Slider;
 const Range = createSliderWithTooltip(Slider.Range);
 
 const ProductsFilter = () => {
+  const router = useRouter();
   const [filtersOpen, setFiltersOpen] = useState(false);
 
-  const addQueryParams = () => {
-    // query params changes
+  const updateCategory = (category: string) => {
+    void router.push(
+      {
+        pathname: router.pathname,
+        query: { ...router.query, category: category === "T-Shirts" ? "T-shirt" : category },
+      },
+      undefined,
+      { shallow: true },
+    );
   };
 
   return (
-    <form className="products-filter" onChange={addQueryParams}>
+    <form className="products-filter" onSubmit={(event) => event.preventDefault()}>
       <button
         type="button"
         onClick={() => setFiltersOpen(!filtersOpen)}
@@ -35,7 +44,12 @@ const ProductsFilter = () => {
           <button type="button">Product type</button>
           <div className="products-filter__block__content">
             {productsTypes.map((type) => (
-              <Checkbox key={type.id} name="product-type" label={type.name} />
+              <Checkbox
+                key={type.id}
+                name="product-type"
+                label={type.name}
+                onChange={() => updateCategory(type.name)}
+              />
             ))}
           </div>
         </div>

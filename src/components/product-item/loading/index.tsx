@@ -1,5 +1,5 @@
 const ProductItemLoading = () => (
-  <a href="#" className="product-item product-item--loading">
+  <div className="product-item product-item--loading">
     <div className="product__image" />
 
     <div className="product__description">
@@ -8,7 +8,7 @@ const ProductItemLoading = () => (
         <h4 />
       </div>
     </div>
-  </a>
+  </div>
 );
 
 export default ProductItemLoading;

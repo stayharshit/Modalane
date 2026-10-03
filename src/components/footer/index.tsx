@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 import Logo from "../../assets/icons/logo";
 
 const Footer = () => {
@@ -15,27 +17,27 @@ const Footer = () => {
             </p>
             <ul className="site-footer__social-networks">
               <li>
-                <a href="#">
+                <a href="https://www.facebook.com" target="_blank" rel="noreferrer" aria-label="Facebook">
                   <i className="icon-facebook" />
                 </a>
               </li>
               <li>
-                <a href="#">
+                <a href="https://twitter.com" target="_blank" rel="noreferrer" aria-label="Twitter">
                   <i className="icon-twitter" />
                 </a>
               </li>
               <li>
-                <a href="#">
+                <a href="https://www.linkedin.com" target="_blank" rel="noreferrer" aria-label="LinkedIn">
                   <i className="icon-linkedin" />
                 </a>
               </li>
               <li>
-                <a href="#">
+                <a href="https://www.instagram.com" target="_blank" rel="noreferrer" aria-label="Instagram">
                   <i className="icon-instagram" />
                 </a>
               </li>
               <li>
-                <a href="#">
+                <a href="https://www.youtube.com" target="_blank" rel="noreferrer" aria-label="YouTube">
                   <i className="icon-youtube-play" />
                 </a>
               </li>
@@ -46,46 +48,46 @@ const Footer = () => {
             <ul>
               <li>Shopping online</li>
               <li>
-                <a href="#">Order Status</a>
+                <Link href="/cart">Order Status</Link>
               </li>
               <li>
-                <a href="#">Shipping and Delivery</a>
+                <Link href="/products">Shipping and Delivery</Link>
               </li>
               <li>
-                <a href="#">Returns</a>
+                <Link href="/products">Returns</Link>
               </li>
               <li>
-                <a href="#">Payment options</a>
+                <Link href="/cart/checkout">Payment options</Link>
               </li>
               <li>
-                <a href="#">Contact Us</a>
+                <a href="mailto:modalanestore@gmail.com">Contact Us</a>
               </li>
             </ul>
             <ul>
               <li>Information</li>
               <li>
-                <a href="#">Gift Cards</a>
+                <Link href="/products">Gift Cards</Link>
               </li>
               <li>
-                <a href="#">Find a store</a>
+                <Link href="/products">Find a store</Link>
               </li>
               <li>
-                <a href="#">Newsletter</a>
+                <Link href="/#newsletter">Newsletter</Link>
               </li>
               <li>
-                <a href="#">Bacome a member</a>
+                <Link href="/register">Become a member</Link>
               </li>
               <li>
-                <a href="#">Site feedback</a>
+                <a href="mailto:modalanestore@gmail.com?subject=Site%20feedback">Site feedback</a>
               </li>
             </ul>
             <ul>
               <li>Contact</li>
               <li>
-                <a href="#">modalanestore@gmail.com</a>
+                <a href="mailto:modalanestore@gmail.com">modalanestore@gmail.com</a>
               </li>
               <li>
-                <a href="#">Hotline: +91 9001920999001</a>
+                <a href="tel:+919001920999001">Hotline: +91 9001920999001</a>
               </li>
             </ul>
           </div>

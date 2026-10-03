@@ -1,6 +1,7 @@
 import type { DocumentContext, DocumentInitialProps } from "next/document";
 import Document, { Head, Html, Main, NextScript } from "next/document";
 
+import appConfig from "@/lib/app-config";
 import { GA_TRACKING_ID } from "@/utils/gtag";
 
 interface DocumentProps extends DocumentInitialProps {
@@ -11,8 +12,7 @@ export default class CustomDocument extends Document<DocumentProps> {
   static async getInitialProps(ctx: DocumentContext): Promise<DocumentProps> {
     const initialProps = await Document.getInitialProps(ctx);
 
-    // Check if in production
-    const isProduction = process.env.NODE_ENV === "production";
+    const isProduction = appConfig.isProduction;
 
     return {
       ...initialProps,
