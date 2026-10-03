@@ -363,8 +363,13 @@ export const products = [
   },
 ];
 
+const baseProduct = products[0];
+if (!baseProduct) {
+  throw new Error("At least one base product is required.");
+}
+
 products.push({
-  ...products[0]!,
+  ...baseProduct,
   id: "7",
   name: "Burgundy City Coat",
   category: "Outerwear",
@@ -420,7 +425,7 @@ products.push(
   ...additionalProducts.map((details, index) => {
     const { image, ...productDetails } = details;
     return {
-      ...products[0]!,
+      ...baseProduct,
       ...productDetails,
       id: String(products.length + index + 1),
       discount: Math.round(((details.price - details.currentPrice) / details.price) * 100),
