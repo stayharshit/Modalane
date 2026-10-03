@@ -26,7 +26,7 @@ const ShoppingCart = () => {
           <CheckoutStatus step="cart" />
         </div>
 
-        <div className="cart-list">
+        <div className="cart-list" aria-live="polite">
           {cartItems.length > 0 && (
             <table>
               <tbody>
@@ -55,14 +55,24 @@ const ShoppingCart = () => {
             </table>
           )}
 
-          {cartItems.length === 0 && <p>Nothing in the cart</p>}
+          {cartItems.length === 0 && (
+            <div className="cart-empty-state">
+              <h4>Your cart is waiting for something good.</h4>
+              <p>Browse the latest essentials and add a few favorites.</p>
+              <Link href="/products" className="btn btn--rounded btn--yellow">
+                Browse products
+              </Link>
+            </div>
+          )}
         </div>
 
         <div className="cart-actions">
           <Link href="/products" className="cart__btn-back">
             <i className="icon-left" /> Continue Shopping
           </Link>
-          <input
+            <label className="visually-hidden" htmlFor="promo-code">Promo code</label>
+            <input
+              id="promo-code"
             type="text"
             placeholder="Promo Code"
             className="cart__promo-code"

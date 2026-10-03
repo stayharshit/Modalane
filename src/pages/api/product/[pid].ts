@@ -1,13 +1,17 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 
-// fake data
-import products from "../../../utils/data/products";
+import prisma from "@/lib/prisma";
+import { serializeProduct } from "@/lib/products";
 
-export default (req: NextApiRequest, res: NextApiResponse) => {
+export default async (req: NextApiRequest, res: NextApiResponse) => {
   const {
     query: { pid },
   } = req;
 
-  const product = products.find((x) => x.id === pid);
-  res.status(200).json(product);
+  const product = await prisma.product.findUnique({ where: { id: String(pid) } });
+  if (!product) {
+    return res.status(404).json({ message: "Product not found" });
+  }
+
+  return res.status(200).json(serializeProduct(product));
 };

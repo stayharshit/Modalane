@@ -32,11 +32,13 @@ const cartSlice = createSlice({
     addProduct: (state, action: PayloadAction<AddProductType>) => {
       const cartItems = state.cartItems;
 
-      // find index of product
       const index = indexSameProduct(state, action.payload.product);
 
       if (index !== -1) {
-        cartItems[index].count += action.payload.count;
+        const existingItem = cartItems[index];
+        if (existingItem) {
+          existingItem.count += action.payload.count;
+        }
         return;
       }
 
@@ -46,16 +48,27 @@ const cartSlice = createSlice({
       };
     },
     removeProduct(state, action: PayloadAction<ProductStoreType>) {
-      // find index of product
-      state.cartItems.splice(indexSameProduct(state, action.payload), 1);
+      const index = indexSameProduct(state, action.payload);
+      if (index !== -1) {
+        state.cartItems.splice(index, 1);
+      }
     },
     setCount(state, action: PayloadAction<AddProductType>) {
-      // find index and add new count on product count
       const indexItem = indexSameProduct(state, action.payload.product);
-      state.cartItems[indexItem].count = action.payload.count;
+      if (indexItem === -1) {
+        return;
+      }
+
+      const targetItem = state.cartItems[indexItem];
+      if (targetItem) {
+        targetItem.count = action.payload.count;
+      }
+    },
+    clearCart(state) {
+      state.cartItems = [];
     },
   },
 });
 
-export const { addProduct, removeProduct, setCount } = cartSlice.actions;
+export const { addProduct, removeProduct, setCount, clearCart } = cartSlice.actions;
 export default cartSlice.reducer;

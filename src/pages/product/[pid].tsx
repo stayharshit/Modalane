@@ -2,7 +2,6 @@ import type { GetServerSideProps } from "next";
 import { useState } from "react";
 
 import Breadcrumb from "@/components/breadcrumb";
-import Footer from "@/components/footer";
 import Content from "@/components/product-single/content";
 import Description from "@/components/product-single/description";
 import Gallery from "@/components/product-single/gallery";
@@ -34,7 +33,7 @@ const Product = ({ product }: ProductPageType) => {
   const [showBlock, setShowBlock] = useState("description");
 
   return (
-    <Layout>
+    <Layout title={`${product.name} | Modalane`} description={`Shop ${product.name} at Modalane.`}>
       <Breadcrumb />
 
       <section className="product-single">
@@ -58,7 +57,7 @@ const Product = ({ product }: ProductPageType) => {
                 onClick={() => setShowBlock("reviews")}
                 className={`btn btn--rounded ${showBlock === "reviews" ? "btn--active" : ""}`}
               >
-                Reviews (2)
+                Reviews ({product.reviews.length})
               </button>
             </div>
 
@@ -71,7 +70,6 @@ const Product = ({ product }: ProductPageType) => {
       <div className="product-single-page">
         <ProductsFeatured />
       </div>
-      <Footer />
     </Layout>
   );
 };

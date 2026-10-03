@@ -54,7 +54,7 @@ const ShoppingCart = ({
       <td>
         <div className="cart-product">
           <div className="cart-product__img">
-            <img src={thumb} alt="" />
+            <img src={thumb} alt={name} />
           </div>
 
           <div className="cart-product__content">
@@ -73,6 +73,7 @@ const ShoppingCart = ({
         <div className="quantity-button">
           <button
             type="button"
+            aria-label={`Decrease ${name} quantity`}
             onClick={() => setProductCount(count - 1)}
             className="quantity-button__btn"
           >
@@ -81,6 +82,7 @@ const ShoppingCart = ({
           <span>{count}</span>
           <button
             type="button"
+            aria-label={`Increase ${name} quantity`}
             onClick={() => setProductCount(count + 1)}
             className="quantity-button__btn"
           >
@@ -90,7 +92,9 @@ const ShoppingCart = ({
       </td>
       <td>${price}</td>
       <td className="cart-item-cancel">
-        <i className="icon-cancel" onClick={() => removeFromCart()} />
+        <button type="button" aria-label={`Remove ${name} from cart`} onClick={removeFromCart}>
+          <i className="icon-cancel" />
+        </button>
       </td>
     </tr>
   );
