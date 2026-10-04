@@ -3580,6 +3580,65 @@ h5 {
 }
 
 .form {
+  .demo-credentials {
+    display: grid;
+    gap: 10px;
+    margin-bottom: 20px;
+    padding: 14px 16px;
+    border: 1px solid #eadfc9;
+    border-left: 3px solid #ffb33b;
+    border-radius: 8px;
+    background: #fffaf1;
+  }
+
+  .demo-credentials__title {
+    margin: 0;
+    color: #202020;
+    font-size: 14px;
+    font-weight: 700;
+  }
+
+  .demo-credentials__list {
+    display: grid;
+    gap: 5px;
+    margin: 0;
+  }
+
+  .demo-credentials__row {
+    display: grid;
+    grid-template-columns: 68px minmax(0, 1fr);
+    gap: 8px;
+    font-size: 13px;
+    line-height: 1.45;
+
+    dt {
+      color: #747474;
+    }
+
+    dd {
+      margin: 0;
+      color: #202020;
+      font-weight: 600;
+      overflow-wrap: anywhere;
+    }
+  }
+
+  .demo-credentials__action {
+    justify-self: start;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: #805315;
+    font: inherit;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
   .form__input-row {
     margin-bottom: 15px;
 

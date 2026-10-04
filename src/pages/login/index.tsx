@@ -15,7 +15,11 @@ type LoginMail = {
 const LoginPage = () => {
   const router = useRouter();
   const [message, setMessage] = useState("");
-  const { register, handleSubmit, errors } = useForm();
+  const { register, handleSubmit, errors, setValue } = useForm();
+  const demoCredentials = {
+    email: "demo@modalane.test",
+    password: "modalane-demo",
+  };
 
   const onSubmit = async (data: LoginMail) => {
     setMessage("");
@@ -55,6 +59,30 @@ const LoginPage = () => {
             </p>
 
             <form className="form" onSubmit={handleSubmit(onSubmit)}>
+              <section className="demo-credentials" aria-label="Demo account">
+                <h3 className="demo-credentials__title">Demo account</h3>
+                <dl className="demo-credentials__list">
+                  <div className="demo-credentials__row">
+                    <dt>Email</dt>
+                    <dd>{demoCredentials.email}</dd>
+                  </div>
+                  <div className="demo-credentials__row">
+                    <dt>Password</dt>
+                    <dd>{demoCredentials.password}</dd>
+                  </div>
+                </dl>
+                <button
+                  className="demo-credentials__action"
+                  type="button"
+                  onClick={() => {
+                    setValue("email", demoCredentials.email);
+                    setValue("password", demoCredentials.password);
+                  }}
+                >
+                  Fill demo credentials
+                </button>
+              </section>
+
               <div className="form__input-row">
                 <input
                   className="form__input"
