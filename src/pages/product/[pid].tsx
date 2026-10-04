@@ -7,24 +7,26 @@ import Description from "@/components/product-single/description";
 import Gallery from "@/components/product-single/gallery";
 import Reviews from "@/components/product-single/reviews";
 import ProductsFeatured from "@/components/products-featured";
-// types
-import type { ProductType } from "@/types";
+import { serializeProduct } from "@/lib/products";
+import prisma from "@/lib/prisma";
+import type { SerializedProduct } from "@/lib/products";
 
 import Layout from "../../layouts/Main";
-import { server } from "../../utils/server";
 
 type ProductPageType = {
-  product: ProductType;
+  product: SerializedProduct;
 };
 
-export const getServerSideProps: GetServerSideProps = async ({ query }) => {
-  const { pid } = query;
-  const res = await fetch(`${server}/api/product/${pid}`);
-  const product = await res.json();
+export const getServerSideProps: GetServerSideProps<ProductPageType> = async ({ params }) => {
+  const productId = params?.pid;
+  if (typeof productId !== "string") return { notFound: true };
+
+  const product = await prisma.product.findUnique({ where: { id: productId } });
+  if (!product) return { notFound: true };
 
   return {
     props: {
-      product,
+      product: serializeProduct(product),
     },
   };
 };

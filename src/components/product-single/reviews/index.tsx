@@ -1,11 +1,11 @@
-import type { ProductType } from "@/types";
+import type { SerializedProduct } from "@/lib/products";
 
 import Punctuation from "./punctuation";
 import ReviewsList from "./reviews-list";
 
 type ReviewsProductType = {
   show: boolean;
-  product: ProductType;
+  product: SerializedProduct;
 };
 
 const Reviews = ({ show, product }: ReviewsProductType) => {

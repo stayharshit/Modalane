@@ -2,17 +2,18 @@ import { some } from "lodash";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
+import type { SerializedProduct } from "@/lib/products";
 import type { RootState } from "@/store";
 import { addProduct } from "@/store/reducers/cart";
 import { toggleFavProduct } from "@/store/reducers/user";
-import type { ProductStoreType, ProductType } from "@/types";
+import type { ProductStoreType } from "@/types";
 
 import productsColors from "../../../utils/data/products-colors";
 import productsSizes from "../../../utils/data/products-sizes";
 import CheckboxColor from "../../products-filter/form-builder/checkbox-color";
 
 type ProductContent = {
-  product: ProductType;
+  product: SerializedProduct;
 };
 
 const Content = ({ product }: ProductContent) => {

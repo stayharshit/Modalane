@@ -22,3 +22,5 @@ export const serializeProduct = (product: Product) => ({
   punctuation: parseJson(product.punctuation, { countOpinions: 0, punctuation: 0, votes: [] }),
   reviews: parseJson(product.reviews, []),
 });
+
+export type SerializedProduct = ReturnType<typeof serializeProduct>;
