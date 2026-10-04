@@ -48,7 +48,7 @@ const categoryTiles = [
     href: "/product/19",
     accent: "#efe7ea",
   },
-];
+] as const;
 
 const localFeaturedProducts: ProductCard[] = catalogProducts.slice(0, 6).map((item) => ({
   id: item.id,
