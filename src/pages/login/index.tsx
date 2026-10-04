@@ -4,7 +4,6 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 
 import Layout from "../../layouts/Main";
-import { server } from "../../utils/server";
 import { postData } from "../../utils/services";
 
 type LoginMail = {
@@ -25,13 +24,13 @@ const LoginPage = () => {
     setMessage("");
 
     try {
-      const response = await postData(`${server}/api/login`, {
+      const response = await postData("/api/login", {
         email: data.email,
         password: data.password,
       });
 
       if (response.status === true) {
-        await router.push("/profile");
+        await router.push("/");
         return;
       }
 
