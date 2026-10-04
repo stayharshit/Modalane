@@ -31,7 +31,7 @@ This repository is a legacy e-commerce demo built with older Next.js patterns, R
 - Product listing data is now queryable through `/api/products` with `search`, `category`, and `sort` parameters.
 - The products page keeps filter and sort state in the URL, and the header search submits directly into that catalog flow.
 - Product detail APIs now return a proper 404 response for unknown IDs.
-- Prisma 6.7.0 is installed with a local SQLite schema for users, products, orders, and order items.
+- Prisma 6.7.0 is configured for PostgreSQL; the schema is applied and the existing local SQLite records have been migrated.
 - `db:generate`, `db:push`, and `db:seed` are available through pnpm. The seed creates the catalog and `demo@modalane.test` / `modalane-demo`.
 - Registration and login now use the database with hashed passwords. Session cookies and database-backed product reads remain the next backend milestone.
 
@@ -51,7 +51,7 @@ This repository is a legacy e-commerce demo built with older Next.js patterns, R
 ### Backend / Data
 
 - Next.js API routes or dedicated Node API service
-- Prisma ORM + PostgreSQL or SQLite for demo data
+- Prisma ORM + PostgreSQL for persistent data
 - Server-side validation and typed DTOs
 - Product, cart, user, order, and payment models
 - Seed data and demo admin flows
@@ -281,7 +281,7 @@ Example environment variables to prepare:
 
 ```env
 NEXT_PUBLIC_APP_URL=http://localhost:3000
-DATABASE_URL="file:./dev.db"
+DATABASE_URL="postgresql://USER:PASSWORD@HOST:5432/DATABASE?sslmode=require"
 NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_test_xxx
 STRIPE_SECRET_KEY=sk_test_xxx
 STRIPE_WEBHOOK_SECRET=whsec_xxx
