@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { GetServerSideProps } from "next";
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 
@@ -68,6 +69,7 @@ const CheckoutSuccessPage = ({
   sessionId,
   error: initialError,
 }: SuccessPageProps) => {
+  const router = useRouter();
   const dispatch = useDispatch();
   const [state, setState] = useState(initialState);
   const orderId = initialOrderId;
@@ -128,12 +130,35 @@ const CheckoutSuccessPage = ({
     };
   }, [dispatch, initialOrderId, sessionId, state]);
 
+  useEffect(() => {
+    if (state !== "paid") return;
+
+    const redirectTimer = window.setTimeout(() => {
+      void router.replace("/");
+    }, 7000);
+
+    return () => window.clearTimeout(redirectTimer);
+  }, [router, state]);
+
   return (
     <Layout title="Payment status | Modalane">
-      <section className="form-page">
+      {state === "paid" && (
+        <div className="toast-container" role="status" aria-live="polite">
+          <div className="toast toast--success">
+            Payment confirmed. Your order has been placed.
+          </div>
+        </div>
+      )}
+
+      <section className="success-page">
         <div className="container">
-          <div className="form-block">
-            <h2 className="form-block__title">
+          <div className="success-card">
+            {state === "paid" && (
+              <div className="success-check" role="img" aria-label="Payment successful">
+                <span aria-hidden="true">&#10003;</span>
+              </div>
+            )}
+            <h2 className="success-title">
               {state === "paid" ? "Payment confirmed" : "Payment status"}
             </h2>
             {state === "paid" && (
@@ -150,8 +175,8 @@ const CheckoutSuccessPage = ({
             {state === "error" && (
               <p className="message message--error" role="alert">{error}</p>
             )}
-            <Link href="/products" className="btn btn--rounded btn--yellow">
-              Continue shopping
+            <Link href={state === "paid" ? "/" : "/products"} className="btn btn--rounded btn--yellow success-button">
+              {state === "paid" ? "Go to home" : "Continue shopping"}
             </Link>
           </div>
         </div>

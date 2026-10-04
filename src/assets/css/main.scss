@@ -3540,8 +3540,8 @@ h5 {
 }
 
 .success-card {
-  max-width: 860px;
-  min-height: 330px;
+  max-width: 720px;
+  min-height: 390px;
   margin: 0 auto;
   background: rgba(255, 255, 255, 0.85);
   border: 1px solid #e4e4e4;
@@ -3556,18 +3556,37 @@ h5 {
   backdrop-filter: blur(6px);
 }
 
-.success-card .form-block__title {
+.success-check {
+  display: grid;
+  width: 112px;
+  height: 112px;
+  margin-bottom: 22px;
+  place-items: center;
+  border: 4px solid #16a34a;
+  border-radius: 50%;
+  background: #dcfce7;
+  color: #15803d;
+  box-shadow: 0 0 0 10px rgba(34, 197, 94, 0.1);
+
+  span {
+    font-size: 68px;
+    font-weight: 700;
+    line-height: 1;
+  }
+}
+
+.success-title {
   margin: 0 0 18px;
   padding: 0;
-  font-size: clamp(2rem, 2.6vw, 3rem);
+  font-size: 32px;
   line-height: 1.2;
-  letter-spacing: -0.04em;
+  font-weight: 700;
 }
 
 .success-card .form-block__description {
   max-width: 720px;
   margin: 0 auto 22px;
-  font-size: clamp(1rem, 1.6vw, 1.35rem);
+  font-size: 18px;
   line-height: 1.5;
   color: #393939;
 }
